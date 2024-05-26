@@ -28,10 +28,10 @@ public class MealsRestController {
         this.mealsRepository = mealsRepository;
     }
 
-    @GetMapping("/rest/meals/{id}")
-    EntityModel<Meal> getMealById(@PathVariable String id) {
-        Meal meal = mealsRepository.findMeal(id).orElseThrow(() -> new MealNotFoundException(id));
-        return mealToEntityModel(id, meal);
+    @GetMapping("/rest/meals/{mealId}")
+    EntityModel<Meal> getMealById(@PathVariable String mealId) {
+        Meal meal = mealsRepository.findMeal(mealId).orElseThrow(() -> new MealNotFoundException(mealId));
+        return mealToEntityModel(mealId, meal);
     }
 
     @GetMapping("/rest/meals")
@@ -40,32 +40,16 @@ public class MealsRestController {
 
         List<EntityModel<Meal>> mealEntityModels = new ArrayList<>();
         for (Meal m : meals) {
-            EntityModel<Meal> em = mealToEntityModel(m.getId(), m);
+            EntityModel<Meal> em = mealToEntityModel(m.getMealId(), m);
             mealEntityModels.add(em);
         }
         return CollectionModel.of(mealEntityModels,
                 linkTo(methodOn(MealsRestController.class).getMeals()).withSelfRel());
     }
 
-    private EntityModel<Meal> mealToEntityModel(String id, Meal meal) {
+    private EntityModel<Meal> mealToEntityModel(String mealId, Meal meal) {
         return EntityModel.of(meal,
-                linkTo(methodOn(MealsRestController.class).getMealById(id)).withSelfRel(),
-                linkTo(methodOn(MealsRestController.class).getMeals()).withRel("rest/meals"));
-    }
-
-    @GetMapping("/rest/meals/cheapest")
-    public EntityModel<Meal> getCheapestMeal() {
-        Meal meal = mealsRepository.getCheapestMeal();
-        return EntityModel.of(meal,
-                linkTo(methodOn(MealsRestController.class).getCheapestMeal()).withSelfRel(),
-                linkTo(methodOn(MealsRestController.class).getMeals()).withRel("rest/meals"));
-    }
-
-    @GetMapping("/rest/meals/largest")
-    public EntityModel<Meal> getLargestMeal() {
-        Meal meal = mealsRepository.getLargestMeal();
-        return EntityModel.of(meal,
-                linkTo(methodOn(MealsRestController.class).getLargestMeal()).withSelfRel(),
+                linkTo(methodOn(MealsRestController.class).getMealById(mealId)).withSelfRel(),
                 linkTo(methodOn(MealsRestController.class).getMeals()).withRel("rest/meals"));
     }
 
@@ -111,9 +95,7 @@ public class MealsRestController {
         OrderConfirmation confirmation = mealsRepository.addOrder(order);
         return EntityModel.of(confirmation,
                 linkTo(methodOn(MealsRestController.class).placeOrder(order)).withSelfRel(),
-                linkTo(methodOn(MealsRestController.class).getMeals()).withRel("meals"),
-                linkTo(methodOn(MealsRestController.class).getCheapestMeal()).withRel("cheapestMeal"),
-                linkTo(methodOn(MealsRestController.class).getLargestMeal()).withRel("largestMeal"));
+                linkTo(methodOn(MealsRestController.class).getMeals()).withRel("meals"));
     }
 
     @GetMapping("/rest/orders")

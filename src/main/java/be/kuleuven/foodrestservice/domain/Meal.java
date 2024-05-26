@@ -3,23 +3,28 @@ package be.kuleuven.foodrestservice.domain;
 import java.util.Objects;
 
 public class Meal {
-    protected String id;
+    protected String mealId;
+    protected String restaurantName;
     protected String name;
-    protected Integer kcal;
     protected Double price;
-    protected String description;
-    protected MealType mealType;
-    protected String mealPhoto;
-    protected int quantity; // New field for quantity
+    protected String imagelUrl;
 
     // Getters and Setters
 
-    public String getId() {
-        return id;
+    public String getMealId() {
+        return mealId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.mealId = id;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public String getName() {
@@ -30,14 +35,6 @@ public class Meal {
         this.name = name;
     }
 
-    public Integer getKcal() {
-        return kcal;
-    }
-
-    public void setKcal(Integer kcal) {
-        this.kcal = kcal;
-    }
-
     public Double getPrice() {
         return price;
     }
@@ -46,36 +43,12 @@ public class Meal {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public String getImageUrl() {
+        return imagelUrl;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public MealType getMealType() {
-        return mealType;
-    }
-
-    public void setMealType(MealType mealType) {
-        this.mealType = mealType;
-    }
-
-    public String getMealPhoto() {
-        return mealPhoto;
-    }
-
-    public void setMealPhoto(String mealPhoto) {
-        this.mealPhoto = mealPhoto;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setImageUrl(String imageUrl) {
+        this.imagelUrl = imageUrl;
     }
 
     @Override
@@ -83,16 +56,14 @@ public class Meal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Meal meal = (Meal) o;
-        return Objects.equals(id, meal.id) &&
+        return Objects.equals(mealId, meal.mealId) &&
+                Objects.equals(restaurantName, meal.restaurantName) &&
                 Objects.equals(name, meal.name) &&
-                Objects.equals(kcal, meal.kcal) &&
-                Objects.equals(price, meal.price) &&
-                Objects.equals(description, meal.description) &&
-                mealType == meal.mealType;
+                Objects.equals(price, meal.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, kcal, price, description, mealType);
+        return Objects.hash(mealId, restaurantName, name, price);
     }
 }
