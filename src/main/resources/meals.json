@@ -1,0 +1,54 @@
+{
+  "restaurantName": "Pizza Palance",
+  "restaurantLogoUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_palance_logo.png",
+  "meals": [
+    {
+      "name": "Margherita Pizza",
+      "price": 8.00,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_margherita.png"
+    },
+    {
+      "name": "Pepperoni Pizza",
+      "price": 7.50,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_pepperoni.png"
+    },
+    {
+      "name": "Hawaiian Pizza",
+      "price": 9.00,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_hawaiian.png"
+    },
+    {
+      "name": "Veggie Pizza",
+      "price": 7.00,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_veggie.png"
+    },
+    {
+      "name": "BBQ Chicken Pizza",
+      "price": 9.50,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_bbq_chicken.png"
+    },
+    {
+      "name": "Buffalo Pizza",
+      "price": 8.50,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_buffalo.png"
+    },
+    {
+      "name": "Cheese Pizza",
+      "price": 7.00,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_cheese.png"
+    },
+    {
+      "name": "Mushroom Pizza",
+      "price": 8.00,
+      "quantity": 10,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_mushroom.png"
+    }
+  ]
+}

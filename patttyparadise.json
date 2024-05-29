@@ -1,0 +1,36 @@
+{
+  "restaurantName": "Pattty Paradise",
+  "restaurantLogoUrl": "https://supplierphotos.blob.core.windows.net/images/pattty_paradise_logo.png",
+  "meals": [
+    {
+      "name": "Classic Beef Burger",
+      "price": 8.00,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_beef.png",
+      "quantity": 10
+    },
+    {
+      "name": "Vegan Black Bean Burger",
+      "price": 7.50,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_beans.png",
+      "quantity": 10
+    },
+    {
+      "name": "Fish Fillet Burger",
+      "price": 9.00,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_fish.png",
+      "quantity": 10
+    },
+    {
+      "name": "Veggie Delight Burger",
+      "price": 7.00,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_veggie.png",
+      "quantity": 10
+    },
+    {
+      "name": "Double Bacon Cheeseburger",
+      "price": 10.00,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_bacon.png",
+      "quantity": 10
+    }
+  ]
+}

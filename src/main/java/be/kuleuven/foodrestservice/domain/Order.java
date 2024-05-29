@@ -6,7 +6,6 @@ import java.util.UUID;
 
 public class Order {
     private UUID orderId;
-    private String userId;
     private Date date;
     private String street;
     private String number;
@@ -14,20 +13,22 @@ public class Order {
     private String zip;
     private String phoneNumber;
     private List<CartItem> items;
+    private Double totalPrice;
     private String status;
 
-    // Constructors, getters, and setters
     public Order() {
     }
 
-    public Order(String userId, String street, String number, String city, String zip, String phoneNumber, List<CartItem> items, String status) {
-        this.userId = userId;
+    public Order(UUID orderId, Date date, String street, String number, String city, String zip, String phoneNumber, List<CartItem> items, Double totalPrice, String status) {
+        this.orderId = orderId;
+        this.date = date;
         this.street = street;
         this.number = number;
         this.city = city;
         this.zip = zip;
         this.phoneNumber = phoneNumber;
         this.items = items;
+        this.totalPrice = totalPrice;
         this.status = status;
     }
 
@@ -37,14 +38,6 @@ public class Order {
 
     public void setOrderId(UUID orderId) {
         this.orderId = orderId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public Date getDate() {
@@ -103,6 +96,14 @@ public class Order {
         this.items = items;
     }
 
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -110,4 +111,8 @@ public class Order {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
+
+
 }

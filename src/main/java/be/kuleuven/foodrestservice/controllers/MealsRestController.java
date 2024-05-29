@@ -53,28 +53,6 @@ public class MealsRestController {
                 linkTo(methodOn(MealsRestController.class).getMeals()).withRel("rest/meals"));
     }
 
-    @PostMapping("/rest/reservations")
-    public ResponseEntity<?> makeReservation(@RequestBody Reservation reservation) {
-        mealsRepository.addReservation(reservation.getMealId(), reservation.getReservationTime());
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/rest/reservations/{mealId}")
-    public ResponseEntity<?> cancelReservation(@PathVariable String mealId) {
-        mealsRepository.cancelReservation(mealId);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/rest/reservations/{mealId}")
-    public EntityModel<Reservation> getReservation(@PathVariable String mealId) {
-        Reservation reservation = mealsRepository.getReservation(mealId);
-        if (reservation == null) {
-            throw new ReservationNotFoundException(mealId);
-        }
-        return EntityModel.of(reservation,
-                linkTo(methodOn(MealsRestController.class).getReservation(mealId)).withSelfRel());
-    }
-
     @GetMapping("/rest/restaurant")
     public EntityModel<RestaurantInfo> getRestaurantInfo() {
         RestaurantInfo restaurantInfo = mealsRepository.getRestaurantInfo();
@@ -90,7 +68,7 @@ public class MealsRestController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/rest/orders")
+    @PostMapping("/rest/order")
     public EntityModel<OrderConfirmation> placeOrder(@RequestBody Order order) {
         OrderConfirmation confirmation = mealsRepository.addOrder(order);
         return EntityModel.of(confirmation,

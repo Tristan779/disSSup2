@@ -15,7 +15,7 @@ public class Meal {
         return mealId;
     }
 
-    public void setId(String id) {
+    public void setMealId(String id) {
         this.mealId = id;
     }
 

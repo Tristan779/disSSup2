@@ -2,15 +2,8 @@ package be.kuleuven.foodrestservice.domain;
 
 public class CartItem {
     private String mealId;
+    private String restaurantName;
     private int quantity;
-
-    public CartItem() {
-    }
-
-    public CartItem(String mealId, int quantity) {
-        this.mealId = mealId;
-        this.quantity = quantity;
-    }
 
     public String getMealId() {
         return mealId;
@@ -18,6 +11,14 @@ public class CartItem {
 
     public void setMealId(String mealId) {
         this.mealId = mealId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public int getQuantity() {

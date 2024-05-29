@@ -1,17 +1,26 @@
 package be.kuleuven.foodrestservice.domain;
 
-import java.util.List;
+import java.util.UUID;
 
 public class OrderConfirmation {
+    private UUID orderId;
     private String status;
     private String message;
-    private List<String> mealNames;
+    private String restaurantName;
 
-    // Constructors, getters, and setters
-    public OrderConfirmation(String status, String message, List<String> mealNames) {
+    public OrderConfirmation(UUID orderId, String status, String message, String restaurantName) {
+        this.orderId = orderId;
         this.status = status;
         this.message = message;
-        this.mealNames = mealNames;
+        this.restaurantName = restaurantName;
+    }
+
+    public UUID getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(UUID orderId) {
+        this.orderId = orderId;
     }
 
     public String getStatus() {
@@ -30,11 +39,12 @@ public class OrderConfirmation {
         this.message = message;
     }
 
-    public List<String> getMealNames() {
-        return mealNames;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setMealNames(List<String> mealNames) {
-        this.mealNames = mealNames;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
+
 }
