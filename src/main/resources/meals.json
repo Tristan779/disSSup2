@@ -1,54 +1,36 @@
 {
-  "restaurantName": "Pizza Palance",
-  "restaurantLogoUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_palance_logo.png",
+  "restaurantName": "Pattty Paradise",
+  "restaurantLogoUrl": "https://supplierphotos.blob.core.windows.net/images/pattty_paradise_logo.png",
   "meals": [
     {
-      "name": "Margherita Pizza",
+      "name": "Classic Beef Burger",
       "price": 8.00,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_margherita.png"
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_beef.png",
+      "quantity": 10
     },
     {
-      "name": "Pepperoni Pizza",
+      "name": "Vegan Black Bean Burger",
       "price": 7.50,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_pepperoni.png"
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_beans.png",
+      "quantity": 10
     },
     {
-      "name": "Hawaiian Pizza",
+      "name": "Fish Fillet Burger",
       "price": 9.00,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_hawaiian.png"
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_fish.png",
+      "quantity": 10
     },
     {
-      "name": "Veggie Pizza",
+      "name": "Veggie Delight Burger",
       "price": 7.00,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_veggie.png"
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_veggie.png",
+      "quantity": 10
     },
     {
-      "name": "BBQ Chicken Pizza",
-      "price": 9.50,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_bbq_chicken.png"
-    },
-    {
-      "name": "Buffalo Pizza",
-      "price": 8.50,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_buffalo.png"
-    },
-    {
-      "name": "Cheese Pizza",
-      "price": 7.00,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_cheese.png"
-    },
-    {
-      "name": "Mushroom Pizza",
-      "price": 8.00,
-      "quantity": 10,
-      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_mushroom.png"
+      "name": "Double Bacon Cheeseburger",
+      "price": 10.00,
+      "imageUrl": "https://supplierphotos.blob.core.windows.net/images/burger_bacon.png",
+      "quantity": 10
     }
   ]
 }
