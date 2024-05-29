@@ -7,10 +7,10 @@ public class Meal {
     protected String restaurantName;
     protected String name;
     protected Double price;
-    protected String imagelUrl;
+    protected String imageUrl;
+    protected int quantity;  // Added quantity attribute
 
     // Getters and Setters
-
     public String getMealId() {
         return mealId;
     }
@@ -44,11 +44,19 @@ public class Meal {
     }
 
     public String getImageUrl() {
-        return imagelUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imagelUrl = imageUrl;
+        this.imageUrl = imageUrl;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
@@ -56,14 +64,16 @@ public class Meal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Meal meal = (Meal) o;
-        return Objects.equals(mealId, meal.mealId) &&
+        return quantity == meal.quantity &&
+                Objects.equals(mealId, meal.mealId) &&
                 Objects.equals(restaurantName, meal.restaurantName) &&
                 Objects.equals(name, meal.name) &&
-                Objects.equals(price, meal.price);
+                Objects.equals(price, meal.price) &&
+                Objects.equals(imageUrl, meal.imageUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mealId, restaurantName, name, price);
+        return Objects.hash(mealId, restaurantName, name, price, imageUrl, quantity);
     }
 }

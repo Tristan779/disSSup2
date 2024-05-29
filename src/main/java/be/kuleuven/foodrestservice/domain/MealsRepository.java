@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import be.kuleuven.foodrestservice.exceptions.MealNotFoundException;
-
 @Component
 public class MealsRepository {
     private static final Map<String, Meal> meals = new HashMap<>();
@@ -30,6 +28,7 @@ public class MealsRepository {
         a.setRestaurantName("Pizza Palance");
         a.setName("Margherita Pizza");
         a.setPrice(8.00);
+        a.setQuantity(10); // Set initial stock
         a.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_margherita.png");
         meals.put(a.getMealId(), a);
 
@@ -38,6 +37,7 @@ public class MealsRepository {
         b.setRestaurantName("Pizza Palance");
         b.setName("Pepperoni Pizza");
         b.setPrice(7.50);
+        b.setQuantity(10); // Set initial stock
         b.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_pepperoni.png");
         meals.put(b.getMealId(), b);
 
@@ -46,6 +46,7 @@ public class MealsRepository {
         c.setRestaurantName("Pizza Palance");
         c.setName("Hawaiian Pizza");
         c.setPrice(9.00);
+        c.setQuantity(10); // Set initial stock
         c.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_hawaiian.png");
         meals.put(c.getMealId(), c);
 
@@ -54,6 +55,7 @@ public class MealsRepository {
         d.setRestaurantName("Pizza Palance");
         d.setName("Veggie Pizza");
         d.setPrice(7.00);
+        d.setQuantity(10); // Set initial stock
         d.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_veggie.png");
         meals.put(d.getMealId(), d);
 
@@ -62,6 +64,7 @@ public class MealsRepository {
         e.setRestaurantName("Pizza Palance");
         e.setName("BBQ Chicken Pizza");
         e.setPrice(9.50);
+        e.setQuantity(10); // Set initial stock
         e.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_bbq_chicken.png");
         meals.put(e.getMealId(), e);
 
@@ -70,6 +73,7 @@ public class MealsRepository {
         f.setRestaurantName("Pizza Palance");
         f.setName("Buffalo Pizza");
         f.setPrice(8.50);
+        f.setQuantity(10); // Set initial stock
         f.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_buffalo.png");
         meals.put(f.getMealId(), f);
 
@@ -78,6 +82,7 @@ public class MealsRepository {
         g.setRestaurantName("Pizza Palance");
         g.setName("Cheese Pizza");
         g.setPrice(7.00);
+        g.setQuantity(10); // Set initial stock
         g.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_cheese.png");
         meals.put(g.getMealId(), g);
 
@@ -86,10 +91,10 @@ public class MealsRepository {
         h.setRestaurantName("Pizza Palance");
         h.setName("Mushroom Pizza");
         h.setPrice(8.00);
+        h.setQuantity(10); // Set initial stock
         h.setImageUrl("https://supplierphotos.blob.core.windows.net/images/pizza_mushroom.png");
         meals.put(h.getMealId(), h);
     }
-
 
     public Optional<Meal> findMeal(String id) {
         Assert.notNull(id, "The meal id must not be null");
@@ -100,7 +105,6 @@ public class MealsRepository {
     public Collection<Meal> getAllMeal() {
         return meals.values();
     }
-
 
     public void addMeal(Meal meal) {
         meals.put(meal.getMealId(), meal);
@@ -124,27 +128,41 @@ public class MealsRepository {
     }
 
     public OrderConfirmation addOrder(Order order) {
-        List<String> mealNames = order.getMealIds().stream()
-                .map(meals::get)
+        List<String> mealNames = order.getItems().stream()
+                .map(item -> meals.get(item.getMealId()))
                 .filter(Objects::nonNull)
                 .map(Meal::getName)
                 .collect(Collectors.toList());
 
         if (mealNames.isEmpty()) {
-            throw new MealNotFoundException("No valid meals found for the order.");
+            order.setStatus(OrderStatus.FAILED);
+            return new OrderConfirmation(order.getStatus(), "No valid meals found for the order.", mealNames);
+        }
+
+        // Check stock levels
+        for (CartItem item : order.getItems()) {
+            Meal meal = meals.get(item.getMealId());
+            if (meal.getQuantity() < item.getQuantity()) {
+                order.setStatus(OrderStatus.FAILED);
+                return new OrderConfirmation(order.getStatus(), "Not enough stock for meal " + meal.getName(), mealNames);
+            }
         }
 
         // Update meal quantities and restaurant earnings
-        for (String mealId : order.getMealIds()) {
-            Meal meal = meals.get(mealId);
-            totalEarnings += meal.getPrice();
-            totalOrders++;
+        for (CartItem item : order.getItems()) {
+            Meal meal = meals.get(item.getMealId());
+            meal.setQuantity(meal.getQuantity() - item.getQuantity());
+            totalEarnings += meal.getPrice() * item.getQuantity();
+            totalOrders += item.getQuantity();
         }
 
         // Add order to the list of orders
+        order.setOrderId(UUID.randomUUID());
+        order.setDate(new Date());
+        order.setStatus(OrderStatus.SUCCESS);
         orders.add(order);
 
-        return new OrderConfirmation("Order placed successfully.", mealNames);
+        return new OrderConfirmation(order.getStatus(), "Order placed successfully.", mealNames);
     }
 
     public List<Order> getAllOrders() {
