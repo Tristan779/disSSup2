@@ -68,11 +68,19 @@ public class MealsRestController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/rest/order")
-    public EntityModel<OrderConfirmation> placeOrder(@RequestBody Order order) {
-        OrderConfirmation confirmation = mealsRepository.addOrder(order);
+    @PostMapping("/rest/order/prepare")
+    public EntityModel<OrderConfirmation> prepareOrder(@RequestBody Order order) {
+        OrderConfirmation confirmation = mealsRepository.prepareOrder(order);
         return EntityModel.of(confirmation,
-                linkTo(methodOn(MealsRestController.class).placeOrder(order)).withSelfRel(),
+                linkTo(methodOn(MealsRestController.class).prepareOrder(order)).withSelfRel(),
+                linkTo(methodOn(MealsRestController.class).getMeals()).withRel("meals"));
+    }
+
+    @PostMapping("/rest/order/commit")
+    public EntityModel<OrderConfirmation> commitOrder(@RequestBody Order order) {
+        OrderConfirmation confirmation = mealsRepository.commitOrder(order);
+        return EntityModel.of(confirmation,
+                linkTo(methodOn(MealsRestController.class).commitOrder(order)).withSelfRel(),
                 linkTo(methodOn(MealsRestController.class).getMeals()).withRel("meals"));
     }
 

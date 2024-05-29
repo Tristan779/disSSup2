@@ -41,7 +41,7 @@
     {
       "name": "Cheese Pizza",
       "price": 7.00,
-      "quantity": 10,
+      "quantity": 1,
       "imageUrl": "https://supplierphotos.blob.core.windows.net/images/pizza_cheese.png"
     },
     {

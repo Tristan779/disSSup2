@@ -59,8 +59,8 @@ public class MealsRepository {
         return meals.values();
     }
 
-    public OrderConfirmation addOrder(Order order) {
-
+    public OrderConfirmation prepareOrder(Order order) {
+        // Same checks as in the original addOrder method
         if (order == null ||
                 order.getOrderId() == null ||
                 order.getDate() == null ||
@@ -74,25 +74,32 @@ public class MealsRepository {
             return new OrderConfirmation(null, OrderStatus.FAILED, "Invalid order data.", restaurantInfo.getName());
         }
 
-        List<String> mealNames = order.getItems().stream()
-                .map(item -> meals.get(item.getMealId()))
-                .filter(Objects::nonNull)
-                .map(Meal::getName)
-                .toList();
-
-        if (mealNames.isEmpty()) {
-            order.setStatus(OrderStatus.FAILED);
-            orders.add(order);
-            return new OrderConfirmation(order.getOrderId(), order.getStatus(), "No valid meals found for the order.", restaurantInfo.getName());
+        for (CartItem item : order.getItems()) {
+            Meal meal = meals.get(item.getMealId());
+            if (meal == null) {
+                return new OrderConfirmation(order.getOrderId(), OrderStatus.FAILED, "Invalid meal ID found in the order: " + item.getMealId(), restaurantInfo.getName());
+            }
         }
 
         for (CartItem item : order.getItems()) {
             Meal meal = meals.get(item.getMealId());
             if (meal.getQuantity() < item.getQuantity()) {
-                order.setStatus(OrderStatus.FAILED);
-                orders.add(order);
-                return new OrderConfirmation(order.getOrderId(), order.getStatus(), "Not enough stock for meal " + meal.getName(), restaurantInfo.getName());
+                return new OrderConfirmation(order.getOrderId(), OrderStatus.FAILED, "Not enough stock for meal " + meal.getName(), restaurantInfo.getName());
             }
+        }
+
+        // If all checks pass, return a positive response without modifying the order or the meals
+        return new OrderConfirmation(order.getOrderId(), OrderStatus.PENDING, "Order can be placed.", restaurantInfo.getName());
+    }
+
+
+    public OrderConfirmation commitOrder(Order order) {
+        // Assume that the order has been prepared and can be placed
+
+        // Update the quantity of the meals
+        for (CartItem item : order.getItems()) {
+            Meal meal = meals.get(item.getMealId());
+            meal.setQuantity(meal.getQuantity() - item.getQuantity());
         }
 
         totalEarnings += order.getTotalPrice();
@@ -100,11 +107,10 @@ public class MealsRepository {
                 .mapToInt(CartItem::getQuantity)
                 .sum();
 
-
         order.setStatus(OrderStatus.SUCCESS);
         orders.add(order);
 
-        return new OrderConfirmation(order.getOrderId(), order.getStatus(), "Order placed successfully.", "Pizza Palance");
+        return new OrderConfirmation(order.getOrderId(), order.getStatus(), "Order placed successfully.", restaurantInfo.getName());
     }
 
     public List<Order> getAllOrders() {
