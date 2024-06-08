@@ -64,6 +64,7 @@ public class MealsRepository {
         if (order == null ||
                 order.getOrderId() == null ||
                 order.getDate() == null ||
+                order.getUserName () == null ||
                 order.getStreet() == null ||
                 order.getNumber() == null ||
                 order.getCity() == null ||
@@ -81,11 +82,19 @@ public class MealsRepository {
             }
         }
 
+        List<String> insufficientStockMeals = new ArrayList<>();
+
         for (CartItem item : order.getItems()) {
             Meal meal = meals.get(item.getMealId());
             if (meal.getQuantity() < item.getQuantity()) {
-                return new OrderConfirmation(order.getOrderId(), OrderStatus.FAILED, "Not enough stock for meal " + meal.getName(), restaurantInfo.getName());
+                insufficientStockMeals.add(meal.getName());
             }
+        }
+
+        if (!insufficientStockMeals.isEmpty()) {
+            String mealsList = String.join(", ", insufficientStockMeals);
+            String mealOrMeals = insufficientStockMeals.size() > 1 ? "meals" : "meal";
+            return new OrderConfirmation(order.getOrderId(), OrderStatus.FAILED, "Not enough stock for " + mealOrMeals + ": " + mealsList, restaurantInfo.getName());
         }
 
         // If all checks pass, return a positive response without modifying the order or the meals

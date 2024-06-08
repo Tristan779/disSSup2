@@ -7,6 +7,7 @@ import java.util.UUID;
 public class Order {
     private UUID orderId;
     private Date date;
+    private String userName;
     private String street;
     private String number;
     private String city;
@@ -19,9 +20,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(UUID orderId, Date date, String street, String number, String city, String zip, String phoneNumber, List<CartItem> items, Double totalPrice, String status) {
+    public Order(UUID orderId, Date date, String userName, String street, String number, String city, String zip, String phoneNumber, List<CartItem> items, Double totalPrice, String status) {
         this.orderId = orderId;
         this.date = date;
+        this.userName = userName;
         this.street = street;
         this.number = number;
         this.city = city;
@@ -46,6 +48,14 @@ public class Order {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getStreet() {
